@@ -1,0 +1,5 @@
+﻿{
+  "ConnectionStrings": {
+    "SmartStoreDBContext": "data source=NB_GPOPA\\SQLEXPRESS;initial catalog=SmartStoreDB;integrated security=True;MultipleActiveResultSets=True;Connect Timeout = 30;"
+  }
+}

@@ -1,0 +1,105 @@
+﻿@model StoreAppNG.ViewModels.ProductViewModel
+@{
+    ViewBag.Title = "Create";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+
+<h2>Create</h2>
+<div>
+    @using (Html.BeginForm("Create", "Product", FormMethod.Post))
+    {
+        @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+        <hr />
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Name)
+            @Html.EditorFor(model => model.Name, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Name, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(model => model.Description)
+        <div class="form-group">
+
+            @Html.EditorFor(model => model.Description, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Description, "", new { @class = "text-danger" })
+        </div>
+        @Html.LabelFor(model => model.Price)
+        <div class="form-group">
+
+            @Html.EditorFor(model => model.Price, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.Price, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Category)
+            @Html.DropDownListFor(m => m.Category.CategoryId,
+                new SelectList(Model.Categories, "Value", "Text"),
+                "--Select Category--",
+                new { @class = "form-control", @id = "Category" }
+                )
+            @Html.ValidationMessageFor(model => model.Category.CategoryId, "", new { @class = "text-danger" })
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.Brand.Name)
+            @Html.DropDownListFor(m => m.Brand.BrandId,
+                new SelectList(Model.Brands, "Value", "Text"),
+                "--Select Brand--",
+                new { @class = "form-control", @id = "Brand" })
+            @Html.ValidationMessageFor(m => m.Brand.BrandId, "", new { @class = "text-danger" })
+        </div>
+
+
+       
+
+        <input type="submit" class="btn btn-success" value="Save Product" />
+
+
+    }
+
+</div>
+
+
+
+@section Scripts{
+   
+<script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+    <script type="text/javascript">
+
+                
+    $("#Category").change(function () {
+
+                $("#Brand").empty();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("GetBrands","Product")', // we are calling json method
+                    dataType: 'json',
+                    data: { CategoryId: $("#Category").val() },
+
+                    // here we are get value of selected country and passing same value
+                    //as inputto json method GetStates.
+
+                    success: function (brands) {
+                        // states contains the JSON formatted list
+                        // of states passed from the controller
+
+                        $("#Brand").append('<option value="">' +
+                                "--Select Brand--" + '</option>');
+                        $.each(brands, function () {
+                            $("#Brand").append('<option value="' + this.brandId + '">' +
+                                this.name + '</option>');
+                         
+                            //alert('reached');
+                            // here we are adding option for States
+                        });
+                    },
+                    error: function (ex) {
+                        alert('Failed to retrieve states.' + ex);
+                    }
+                });
+                return false;
+            })
+
+    </script>
+}
+
+

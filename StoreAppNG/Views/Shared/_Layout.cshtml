@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>@ViewBag.Title - Smart Store App</title>
+    <link href="~/lib/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="~/css/Site.css" rel="stylesheet" />
+ 
+</head>
+<body>
+    <header>
+        <nav class="navbar navbar-dark bg-dark navbar-expand-md">
+            <div class="container">
+                <a class="navbar-brand" asp-controller="Product" asp-action="Index">Smart Store</a>
+                <button  class="navbar-toggler collapsed" data-toggle="collapse" data-target="#navMenu" >
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div id="navMenu" class="navbar-collapse collapse">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Product" asp-action="Index">Home</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Product" asp-action="Index">Product</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link" asp-controller="Order" asp-action="Cart">Order</a>
+                        </li>
+                    </ul>
+                    <partial name="~/Views/Shared/_LoginPartial.cshtml" />
+                </div>
+            </div>
+        </nav>
+        
+    </header>
+    <section class="container">
+        @RenderBody()
+        <hr />
+    </section>
+    
+    <footer class="container">
+        <p>&copy; @DateTime.Now.Year - Smart Store App</p>
+    </footer>
+
+    <script src="~/lib/jquery/dist/jquery.min.js"></script>
+    <script src="~/lib/bootstrap/dist/js/bootstrap.min.js"></script>
+    @RenderSection("Scripts", false)
+</body>
+</html>

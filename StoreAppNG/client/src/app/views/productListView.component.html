@@ -1,0 +1,26 @@
+﻿<div class="row">
+    <p> Number of products: {{products.products.length}}.</p>
+    <hr />
+</div>
+
+<table class="table table-bordered">
+    <tr>
+        <th>Id</th>
+        <th>Name</th>
+        <th>Price</th>
+        <th></th>
+    </tr>
+    <tr *ngFor="let p of products.products">
+        <td>{{p.productId}}</td>
+        <td>{{p.name}}</td>
+        <td>{{p.price}}</td>
+        <td>
+            <a href="/Product/Edit/{{p.productId}}">Edit</a> |
+            <a href="/Product/View/{{p.productId}}">Details</a>
+        </td>
+       
+    </tr>
+</table>
+
+<hr />
+<a routerLink="create">Create</a>

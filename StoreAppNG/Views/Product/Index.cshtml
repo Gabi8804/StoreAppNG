@@ -1,0 +1,141 @@
+﻿@model List<ProductViewModel>
+@{
+    ViewBag.Title = "Product List";
+    Layout = "~/Views/Shared/_Layout.cshtml";
+}
+@section Scripts{
+    <script src="~/client/polyfills.js"></script>
+    <script src="~/client/runtime.js"></script>
+    <script src="~/client/main.js" asp-append-version="true"></script>
+}
+
+
+<the-shop></the-shop>
+
+
+@*<h2>Products</h2>
+
+    <hr />
+
+
+
+
+    <p> Number of products: @Model.Count.</p>
+
+    <table class="table">
+        <tr>
+            <th>Id</th>
+            <th>Name</th>
+            <th>Price</th>
+            <th></th>
+        </tr>
+
+        @foreach (var product in Model)
+        {
+            <tr>
+                <td>@product.ProductId</td>
+                <td>@product.Name</td>
+                <td>@product.Price</td>
+                <td>
+                    @Html.ActionLink("Details", "View", "Product", new { id = product.ProductId }, null) |
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Edit", "Edit", "Product", new { id = product.ProductId }, null)
+                    }
+                    @if (User.IsInRole("Admin"))
+                    {
+                        @Html.ActionLink("Delete", "Delete", "Product", new { id = product.ProductId }, null)
+                    }
+                    <button type="button" class="btn btn-success btn-sm" onclick="AddToCart(this.value)" value="@product.ProductId" id="addToCart_@product.ProductId"><span><i class="fa  fa-shopping-cart"></i> Add To Cart</span></button> |
+                    <button type="button" style="display:none" class="btn btn-danger btn-sm" onclick="RemoveFromCart(this.value)" value="@product.ProductId" id="removeFromCart_@product.ProductId"><span><i class="fa fa-minus-square"></i> Remove from Cart</span></button>
+                </td>
+            </tr>
+        }
+    </table>
+    @if (User.IsInRole("Admin"))
+    {
+        @Html.ActionLink("Create Product", "Create", "Product")
+    }
+
+    @section Scripts{
+        <script src="~/lib/jquery-validation/dist/jquery.validate.js"></script>
+
+        <script type="text/javascript">
+           $(document).ready(function () {
+               GetProductsOfCart();
+           });
+
+
+        function GetProductsOfCart() {
+            $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("GetProductsOfCart","Order")', // we are calling json method
+                        dataType: 'json',
+                        data: { },
+
+                        // here we are get value of selected country and passing same value
+                        //as inputto json method GetStates.
+
+                        success: function (data) {
+                            // states contains the JSON formatted list
+                            // of states passed from the controller
+                            for (var key in data) {
+                                $('#removeFromCart_' + data[key]).show();
+                            }
+
+                            //$.each(data, function () {
+                            //    $('#removeFromCart_' + data).show();
+                            //    alert(data);
+                            //    //alert('reached');
+                            //    // here we are adding option for States
+                            //});
+                        },
+                        error: function (ex) {
+                            alert('Failed to retrieve states.' + ex);
+                        }
+                    });
+        }
+
+        function AddToCart(value) {
+            $('#removeFromCart_' + value).show();
+                    $.ajax({
+                        type: 'POST',
+                        url: '@Url.Action("AddToCart","Order")', // we are calling json method
+                        dataType: 'json',
+                        data: { ProductId: value },
+
+                        // here we are get value of selected country and passing same value
+                        //as inputto json method GetStates.
+
+                        success: function (data) {
+
+                        },
+                        error: function (ex) {
+                        }
+                    });
+
+                };
+
+        function RemoveFromCart(value) {
+                $('#removeFromCart_' + value).hide();
+                $.ajax({
+                    type: 'POST',
+                    url: '@Url.Action("RemoveFromCart","Order")', // we are calling json method
+                    dataType: 'json',
+                    data: { ProductId: value },
+
+                    // here we are get value of selected country and passing same value
+                    //as inputto json method GetStates.
+
+                    success: function (data) {
+
+
+
+                    },
+                    error: function (ex) {
+                    }
+                });
+
+        };
+        </script>
+    }*@

@@ -1,0 +1,42 @@
+﻿<hr />
+<h4>{{title}}</h4>
+
+
+<div class="row">
+
+    <form #myForm="ngForm" (submit)="onCreate(myForm)">
+        <div class="form-group">
+            <label for="name">Name</label>
+            <input type="text" class="form-control" required [(ngModel)]="newProduct.name" id="name" name="name" />
+        </div>
+
+        <div class="form-group">
+            <label for="description">Description</label>
+            <input type="text" class="form-control" required [(ngModel)]="newProduct.description" id="description" name="description" />
+        </div>
+        <div class="form-group">
+            <label for="price">Price</label>
+            <input type="number" class="form-control" [(ngModel)]="newProduct.price" required id="price" name="price" />
+        </div>
+
+        <div class="form-group">
+            <label for="category">Categories</label>
+            <select class="form-control" name="category" #device id="category" [(ngModel)]="newProduct.categoryId" (change)="onChangeCategory($event, device.value)" required>
+                <option value="default" selected disabled>Select Category</option>
+                <option *ngFor="let c of product.categories" value="{{c.categoryId}}">{{c.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <label for="brand">Brands</label>
+            <select class="form-control" name="brand" id="brand" [(ngModel)]="newProduct.brandId" required>
+                <option value="default" selected disabled>Select Brand</option>
+                <option *ngFor="let c of product.brands" value="{{c.brandId}}">{{c.name}}</option>
+            </select>
+        </div>
+        <div class="form-group">
+            <input type="submit" class="btn btn-success"  value="Create Product" />
+        </div>
+    </form>
+
+   
+</div>
