@@ -56,7 +56,6 @@ namespace StoreAppNG.Controllers
             {
                 return BadRequest("failed to get products");
             }
-            return BadRequest("failed to get products");
         }
 
         [HttpGet("{id:int}")]
@@ -79,22 +78,22 @@ namespace StoreAppNG.Controllers
         [HttpPost]
         [ProducesResponseType(200)]
         [ProducesResponseType(400)]
-        public ActionResult Create([FromBody]NgProductViewModel ngProduct)
+        public ActionResult Create([FromBody]ProductViewModel product)
         {
-            var product = new ProductViewModel()
-            {
-                Brand = new BrandViewModel()
-                {
-                    BrandId =Convert.ToInt32(ngProduct.BrandId)
-                },
-                Category = new CategoryViewModel()
-                {
-                    CategoryId = Convert.ToInt32(ngProduct.CategoryId)
-                },
-                Name = ngProduct.Name,
-                Description = ngProduct.Description,
-                Price = ngProduct.Price
-            };
+            //var product = new ProductViewModel()
+            //{
+            //    Brand = new BrandViewModel()
+            //    {
+            //        BrandId =Convert.ToInt32(ngProduct.BrandId)
+            //    },
+            //    Category = new CategoryViewModel()
+            //    {
+            //        CategoryId = Convert.ToInt32(ngProduct.CategoryId)
+            //    },
+            //    Name = ngProduct.Name,
+            //    Description = ngProduct.Description,
+            //    Price = ngProduct.Price
+            //};
             try
             {
                 var brandModel = new BrandModel()

@@ -5,8 +5,8 @@
     price: number;
     brandCategoryId: number;
     quantity: number;
-    category: Category;
-    brand: Brand;
+    category: Category = new Category();
+    brand: Brand = new Brand();
 }
 
 export class Category{
@@ -16,13 +16,5 @@ export class Category{
 export class Brand {
     brandId: number;
     name: string;
-}
-
-export class NewProduct {
-    name: string;
-    description: string;
-    brandId: string;
-    categoryId: string;
-    price: number;
 }
 

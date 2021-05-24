@@ -1,8 +1,7 @@
-﻿import { Component, OnInit } from "@angular/core";
+﻿import { Component, Input, OnInit } from "@angular/core";
 import { FormControl, NgForm } from "@angular/forms";
 import { Router } from "@angular/router";
 import { Store } from "../services/store.service";
-import { Brand, Category, NewProduct } from "../shared/Product";
 
 @Component({
     selector: "create-view",
@@ -10,49 +9,42 @@ import { Brand, Category, NewProduct } from "../shared/Product";
 })
 
 export default class CreateView implements OnInit  {
-    title = "Create Product"
-    constructor(public product: Store, private router: Router) {
-        
-    }
-    
-    public newProduct: NewProduct = {
-        description:"",
-        price: "" as unknown as number,
-        name: "",
-        brandId: "" ,
-        categoryId: ""
-    }
 
+    title = "Create Product"
+    showBrandSelect = false;
+
+    constructor(public product: Store, private router: Router) {
+       
+    }
 
     ngOnInit(): void {
         console.log("debugging");
         this.product
             .getCategories()
-            .subscribe(
-                data => {
-                    for (let c of this.product.categories) {
-                        console.log(c.categoryId)
-                    }
-                }
-            );
-        
-        
+            .subscribe();
+        if (this.product.product.brand.brandId != null && this.product.product.brand.brandId != undefined) {
+            this.showBrandSelect = true;
+        }else
+        this.showBrandSelect = false;
     }
 
-    onChangeCategory($event: any, categoryId: string) {
-        var catId = Number(categoryId);
-        this.product
-            .getBrands(catId)
-            .subscribe();
+    onChangeCategory(categoryId: any) {
+        if (categoryId != null && categoryId != undefined) {
+            this.product
+                .getBrands(categoryId)
+                .subscribe();
+            this.showBrandSelect = true;
+        }
     }
 
     onCreate(myForm: NgForm) {
         if (myForm.valid) {
-        this.product
-            .Create(this.newProduct)
+            this.product
+                .Create(this.product.product)
             .subscribe(() => {
-                //this.router.navigate([""]);
+                this.router.navigate([""]);
                 myForm.reset();
+                this.showBrandSelect = false;
             });
         }
     }

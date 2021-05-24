@@ -3,7 +3,7 @@ import { error } from "@angular/compiler/src/util";
 import { Injectable } from "@angular/core";
 import { map } from "rxjs/operators";
 import { CreateProduct } from "../pages/create.component";
-import { Brand, Category, NewProduct, Product } from "../shared/Product";
+import { Brand, Category, Product } from "../shared/Product";
 
 @Injectable()
 export class Store {
@@ -30,23 +30,20 @@ export class Store {
                 return;
             }));
     }
-
-
     getBrands(id: number) {
-        return this.http.get<[]>(`/api/Categories/${id}`)
-            .pipe(map(data => {
-                this.brands = data;
-                return;
-            }));
+            return this.http.get<[]>(`/api/Categories/${id}`)
+                .pipe(map(data => {
+                    this.brands = data;
+                    return;
+                }));
+       
     }
 
-    Create(newProduct: NewProduct) {
-        return this.http.post<NewProduct>("api/Products", newProduct)
+    Create(createProduct: Product) {
+        alert(createProduct.name)
+        return this.http.post<Product>("api/Products", createProduct)
             .pipe(map(data => {
             }));
-
     }
-
-    
 }
 
